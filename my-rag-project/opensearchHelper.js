@@ -1,6 +1,7 @@
 // opensearchHelper.js
 const { Client } = require("@opensearch-project/opensearch");
 
+// OpenSearchクライアントのインスタンスを osClient という変数名で作成
 const osClient = new Client({
   node: "https://search-abc-company-3-viafjf6tndjbkgztqtwadgyiai.ap-northeast-1.es.amazonaws.com",
   auth: {
@@ -15,7 +16,7 @@ const osClient = new Client({
  * @param {object} doc - 登録するドキュメント
  */
 async function indexDocument(indexName, doc) {
-  // ここはそのまま osClient にアクセス
+  // osClient の index() メソッドを使ってドキュメントを登録
   const result = await osClient.index({
     index: indexName,
     body: doc,
@@ -23,6 +24,7 @@ async function indexDocument(indexName, doc) {
   return result;
 }
 
+// osClient と indexDocument をエクスポート
 module.exports = {
   osClient,
   indexDocument,
