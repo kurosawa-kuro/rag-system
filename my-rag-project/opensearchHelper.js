@@ -1,12 +1,13 @@
 // opensearchHelper.js
 const { Client } = require("@opensearch-project/opensearch");
+require('dotenv').config();
 
 // OpenSearchクライアントのインスタンスを osClient という変数名で作成
 const osClient = new Client({
-  node: "https://search-abc-company-3-viafjf6tndjbkgztqtwadgyiai.ap-northeast-1.es.amazonaws.com",
+  node: process.env.OPENSEARCH_NODE,
   auth: {
-    username: "abc-company-user",
-    password: "abc-company-Pw1!"
+    username: process.env.OPENSEARCH_USERNAME,
+    password: process.env.OPENSEARCH_PASSWORD
   }
 });
 
