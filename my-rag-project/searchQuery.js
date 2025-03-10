@@ -29,15 +29,16 @@ const { osClient } = require("./opensearchHelper");
     // 3) 検索ヒットを変数に格納
     const hits = searchResult.body.hits.hits;
 
-    // 4) ヒットしたチャンクをコンソール出力
-    console.log(`\n=== Search Results (Top ${k}) ===`);
+    // 4) コンソール出力
+    console.log(`\n=== Search Results for query: "${queryText}" (Top ${k}) ===`);
+
     hits.forEach((hit, i) => {
       console.log(`\n[Result #${i + 1}]`);
-      console.log("Score:", hit._score);            // スコア
-      console.log("Chunk Text:", hit._source.text); // RAGで利用したい本文
-      console.log("Metadata:", hit._source.metadata); // メタ情報(ファイル名など)
+      console.log("Score:", hit._score);
+      console.log("Chunk Text:", hit._source.text);
+      console.log("Metadata:", hit._source.metadata);
     });
-    
+
   } catch (err) {
     console.error("Error in searching:", err);
   }
