@@ -1,18 +1,24 @@
-// embeddingHelper.js
-const openai = require("openai");
+// embeddingHelper.js (CommonJS版)
+
+// ❶ 新しいクラス/オブジェクトの呼び出し
+const { OpenAI } = require('openai');
 
 async function getEmbedding(text) {
-  // ここで console.log(openai) して何が入っているか確認してもOK
-  const configuration = new openai.Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
+  // ❷ OpenAI インスタンスを生成
+  const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY, 
+    // ここに organization 等を入れる場合も
   });
-  const api = new openai.OpenAIApi(configuration);
 
-  const response = await api.createEmbedding({
+  // ❸ Embeddings APIを呼ぶ
+  const response = await openai.embeddings.create({
     model: "text-embedding-ada-002",
-    input: text,
+    input: text
   });
-  return response.data.data[0].embedding;
+
+  // ❹ 新ライブラリでは response.data が配列になっている
+  //    旧ライブラリとは構造が違うので注意
+  return response.data[0].embedding;
 }
 
 module.exports = { getEmbedding };
