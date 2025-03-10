@@ -1,7 +1,7 @@
 // searchQuery.js
 require("dotenv").config();
 const { getEmbedding } = require("./embeddingHelper");
-const { client } = require("./opensearchHelper"); 
+const { osClient } = require("./opensearchHelper");
 // ↑ opensearchHelperで exportした client (または osClient) を読み込む
 
 (async () => {
@@ -18,7 +18,7 @@ const { client } = require("./opensearchHelper");
     const k = 3; // 上位3件
     const indexName = "my-index";
 
-    const searchResult = await client.search({
+    const searchResult = await osClient.search({
       index: indexName,
       body: {
         query: {
