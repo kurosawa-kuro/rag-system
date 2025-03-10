@@ -13,7 +13,7 @@ const INDEX_NAME = "my-index"; // 事前にk-NN設定で作成しておく
 // 例：S3上にあるファイル(key)を指定して実行する
 (async () => {
   try {
-    const fileKey = "data/company_overview.pdf"; 
+    const fileKey = "data/company_overview.txt"; 
     // or "data/company_overview.txt" etc.
 
     // 1) S3から文書を取得＆テキスト化
