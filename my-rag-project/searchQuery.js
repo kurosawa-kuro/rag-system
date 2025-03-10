@@ -2,29 +2,23 @@
 require("dotenv").config();
 const { getEmbedding } = require("./embeddingHelper");
 const { osClient } = require("./opensearchHelper");
-// ↑ opensearchHelperで exportした client (または osClient) を読み込む
 
 (async () => {
   try {
-    // ❶ 検索したい自然言語クエリ
+    // 1) 検索クエリ
     const queryText = "What does the company overview say about its mission?";
-
-    // ❷ Embeddingを生成 (1536次元ベクトルが返る)
-    console.log("Getting embedding for query:", queryText);
     const queryVector = await getEmbedding(queryText);
-    console.log("queryVector length:", queryVector.length); // 1536のはず
 
-    // ❸ k-NN検索リクエスト
-    const k = 3; // 上位3件
+    // 2) k-NN検索実行
     const indexName = "my-index";
-
+    const k = 3;
     const searchResult = await osClient.search({
       index: indexName,
       body: {
         query: {
           knn: {
             content_vector: {
-              vector: queryVector, 
+              vector: queryVector,
               k: k
             }
           }
@@ -32,8 +26,18 @@ const { osClient } = require("./opensearchHelper");
       }
     });
 
-    // ❹ 検索結果を表示
-    console.log("Search hits:", JSON.stringify(searchResult.body.hits.hits, null, 2));
+    // 3) 検索ヒットを変数に格納
+    const hits = searchResult.body.hits.hits;
+
+    // 4) ヒットしたチャンクをコンソール出力
+    console.log(`\n=== Search Results (Top ${k}) ===`);
+    hits.forEach((hit, i) => {
+      console.log(`\n[Result #${i + 1}]`);
+      console.log("Score:", hit._score);            // スコア
+      console.log("Chunk Text:", hit._source.text); // RAGで利用したい本文
+      console.log("Metadata:", hit._source.metadata); // メタ情報(ファイル名など)
+    });
+    
   } catch (err) {
     console.error("Error in searching:", err);
   }
