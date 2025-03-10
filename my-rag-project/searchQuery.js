@@ -6,7 +6,7 @@ const { osClient } = require("./opensearchHelper");
 (async () => {
   try {
     // 1) 検索クエリ
-    const queryText = "What does the company overview say about its mission?";
+    const queryText = "ABC会社のミッションを教えてください";
     const queryVector = await getEmbedding(queryText);
 
     // 2) k-NN検索実行
