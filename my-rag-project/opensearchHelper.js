@@ -6,7 +6,7 @@ const { Client } = require("@opensearch-project/opensearch");
  *  - endpoint: 自分のドメインのエンドポイントを設定
  */
 const osClient = new Client({
-  node: "https://search-yourdomain-xxxxxxxx.ap-northeast-1.es.amazonaws.com", 
+  node: "https://search-abc-company-3-viafjf6tndjbkgztqtwadgyiai.ap-northeast-1.es.amazonaws.com", 
   // ↑ OpenSearchのエンドポイントURLを指定
   // AWS SigV4認証を使う場合は別途@opensearch-project/opensearch/aws 
   // を使った署名プラグインなどが必要になる場合があります。
