@@ -1,14 +1,14 @@
 // embeddingHelper.js
-const { Configuration, OpenAIApi } = require('openai');
+const openai = require("openai");
 
 async function getEmbedding(text) {
-  const configuration = new Configuration({
+  // ここで console.log(openai) して何が入っているか確認してもOK
+  const configuration = new openai.Configuration({
     apiKey: process.env.OPENAI_API_KEY,
   });
+  const api = new openai.OpenAIApi(configuration);
 
-  const openai = new OpenAIApi(configuration);
-
-  const response = await openai.createEmbedding({
+  const response = await api.createEmbedding({
     model: "text-embedding-ada-002",
     input: text,
   });
